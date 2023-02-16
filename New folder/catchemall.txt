@@ -1,0 +1,42 @@
+package com.rpam.rd.autotasks;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class CatchEmAll {
+
+    //You may set another exception in this field;
+    static Exception exception ;
+
+    public static void riskyMethod() throws Exception {
+        if(exception!=null)
+            throw exception;
+    }
+
+    public static void main(String[] args)throws Exception {
+        if (args.length > 1) {
+            if (args[0].equals("IOException"))
+                exception = new IOException("IOException");
+            else if (args[0].equals("FileNotFoundException"))
+                exception = new FileNotFoundException("FileNotFoundException");
+            else if (args[0].equals("NumberFormatException"))
+                exception = new NumberFormatException("NumberFormatException");
+            else if (args[0].equals("ArithmeticException"))
+                exception = new ArithmeticException("ArithmeticException");
+            else if (args[0].equals("Exception"))
+                exception = new Exception("exception");
+            else
+                System.out.println("Not a IOException,NumberFormatException,ArithmeticException,FileNotFoundException,Exception");
+        }
+        try {
+            riskyMethod();
+        } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("Resource is missing", e);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Resource error", e);
+        } catch (ArithmeticException | NumberFormatException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+}
